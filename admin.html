@@ -549,7 +549,6 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const auth = firebase.auth();
 
         // Authorized users
         const authorizedUsers = [
@@ -750,14 +749,17 @@
             });
         });
 
-        // Add/Edit new post
+        // Add/Edit new post - FIXED VERSION
         postForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log("Form submitted"); // Debug log
             
             const title = document.getElementById('post-title').value;
             const description = document.getElementById('post-description').value;
             const category = document.getElementById('post-category').value;
             const whatsappMessage = document.getElementById('whatsapp-message').value || "I'm interested in this furniture post";
+
+            console.log("Form data:", { title, description, category, whatsappMessage }); // Debug log
 
             let imageData = '';
 
@@ -776,31 +778,31 @@
                 imageData = url || document.getElementById('edit-post-id').dataset.currentImage;
             }
 
+            console.log("Image data:", imageData ? "Image provided" : "No image"); // Debug log
+
             if (isEditing) {
                 // Update existing post
-                getPosts(posts => {
-                    const postIndex = posts.findIndex(post => post.id === currentEditId);
-                    if (postIndex !== -1) {
-                        const updatedPost = {
-                            ...posts[postIndex],
-                            title,
-                            description,
-                            category,
-                            whatsappMessage,
-                            image: imageData
-                        };
-                        
-                        // Save to Firebase
-                        savePost(updatedPost).then(() => {
-                            // Show success message
-                            showMessage('Post updated successfully!', 'success');
-                            
-                            // Reset form and reload
-                            resetForm();
-                            loadPosts();
-                            generatePreview();
-                        });
-                    }
+                console.log("Editing post:", currentEditId); // Debug log
+                const updatedPost = {
+                    id: currentEditId,
+                    title,
+                    description,
+                    category,
+                    whatsappMessage,
+                    image: imageData,
+                    createdAt: document.getElementById('edit-post-id').dataset.createdAt || new Date().toLocaleDateString()
+                };
+                
+                // Save to Firebase
+                savePost(updatedPost).then(() => {
+                    console.log("Post updated successfully"); // Debug log
+                    showMessage('Post updated successfully!', 'success');
+                    resetForm();
+                    loadPosts();
+                    generatePreview();
+                }).catch(error => {
+                    console.error("Error updating post:", error);
+                    showMessage('Error updating post: ' + error.message, 'error');
                 });
             } else {
                 // Add new post
@@ -814,18 +816,18 @@
                     createdAt: new Date().toLocaleDateString()
                 };
 
+                console.log("Adding new post:", newPost); // Debug log
+
                 // Save to Firebase
                 savePost(newPost).then(() => {
-                    // Show success message
+                    console.log("Post added successfully"); // Debug log
                     showMessage('Post added successfully!', 'success');
-                    
-                    // Reset form
                     resetForm();
-                    
-                    // Reload posts list if on manage tab
-                    if (document.getElementById('manage-posts').classList.contains('active')) {
-                        loadPosts();
-                    }
+                    loadPosts();
+                    generatePreview();
+                }).catch(error => {
+                    console.error("Error adding post:", error);
+                    showMessage('Error adding post: ' + error.message, 'error');
                 });
             }
         });
@@ -850,6 +852,7 @@
                     document.getElementById('whatsapp-message').value = post.whatsappMessage;
                     editPostId.value = postId;
                     editPostId.dataset.currentImage = post.image;
+                    editPostId.dataset.createdAt = post.createdAt;
                     
                     // Set image preview
                     if (post.image.startsWith('data:')) {
@@ -888,6 +891,7 @@
             uploadOption.click();
             editPostId.value = '';
             delete editPostId.dataset.currentImage;
+            delete editPostId.dataset.createdAt;
         }
 
         // Load posts for management
@@ -973,6 +977,9 @@
                     if (currentEditId === postId) {
                         resetForm();
                     }
+                }).catch(error => {
+                    console.error("Error deleting post:", error);
+                    showMessage('Error deleting post: ' + error.message, 'error');
                 });
             }
         }
@@ -1000,6 +1007,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             loginScreen.style.display = 'block';
             adminDashboard.style.display = 'none';
+            
+            // Test Firebase connection
+            database.ref('.info/connected').on('value', function(snap) {
+                if (snap.val() === true) {
+                    console.log("Connected to Firebase");
+                } else {
+                    console.log("Not connected to Firebase");
+                }
+            });
         });
     </script>
 </body>
