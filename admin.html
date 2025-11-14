@@ -13,15 +13,47 @@
             --text-color: #333; --border-color: #eaeaea; --success-color: #28a745;
             --error-color: #dc3545; --warning-color: #ffc107;
         }
-        body { font-family: 'Inter', sans-serif; background-color: #f5f5f5; color: var(--text-color); padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .login-container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 400px; text-align: center; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f5f5f5; 
+            color: var(--text-color); 
+            padding: 0; /* Removed padding */
+            min-height: 100vh; 
+            width: 100vw; /* Ensure it covers full viewport width */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        
+        /* CRITICAL FIX: Ensure the login screen or dashboard takes up the entire screen when active */
+        #login-screen, #admin-dashboard {
+            z-index: 1000;
+            position: relative; /* Default position */
+            width: 100%;
+            max-width: 1200px; /* Standard dashboard max-width */
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .login-container { 
+            background: white; padding: 40px; border-radius: 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 400px; 
+            text-align: center; margin: 50px auto; /* Centered */
+        }
+        
         .login-container h2 { margin-bottom: 30px; color: var(--primary-color); font-weight: 600; }
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-control { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 16px; font-family: inherit; transition: border-color 0.3s; }
         .btn { padding: 12px 30px; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; }
         .btn:hover { background: var(--accent-color); color: var(--primary-color); }
         .message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        .admin-container { display: none; width: 100%; max-width: 1200px; background: white; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1); overflow: hidden; }
+        
+        .admin-container { 
+            width: 100%; max-width: 1200px; background: white; border-radius: 10px; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); overflow: hidden; 
+            display: none; /* Controlled by JS */
+        }
+        
         .header { background: var(--primary-color); color: white; padding: 30px; text-align: center; position: relative; }
         .nav-tabs { display: flex; background: #f8f9fa; border-bottom: 1px solid var(--border-color); }
         .tab { padding: 15px 30px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 500; }
@@ -40,47 +72,49 @@
     </style>
 </head>
 <body>
-    <div id="login-screen" class="login-container">
-        <h2>Admin Login</h2>
-        <form id="login-form">
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="admin-email" value="mohsinilyas991@gmail.com" class="form-control" required>
+    <div id="app-container" class="w-full">
+        <div id="login-screen" class="login-container">
+            <h2>Admin Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="admin-email" value="mohsinilyas991@gmail.com" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-password" value="mohsinowner870" class="form-control" required>
+                </div>
+                <div id="login-message" class="message error" style="display: none;">Invalid email or password.</div>
+                <button type="submit" id="login-btn" class="btn" style="width: 100%;">Login</button>
+            </form>
+        </div>
+
+        <div id="admin-dashboard" class="admin-container">
+            <div class="header">
+                <h1>Furniture Posts Admin</h1>
+                <p id="admin-uid-display">UID: Loading...</p>
+                <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="admin-password" value="mohsinowner870" class="form-control" required>
+
+            <div class="nav-tabs" id="nav-tabs">
+                <div class="tab active" data-tab="products">Manage Posts</div>
+                <div class="tab" data-tab="orders">View Orders</div>
             </div>
-            <div id="login-message" class="message error" style="display: none;">Invalid email or password.</div>
-            <button type="submit" id="login-btn" class="btn" style="width: 100%;">Login</button>
-        </form>
+
+            <div id="tab-content">
+                <div id="products-tab" class="tab-content active">
+                    <div id="product-form-container" style="margin-bottom: 30px;"></div>
+                    <div id="product-list-container"></div>
+                </div>
+
+                <div id="orders-tab" class="tab-content">
+                    <h2>Customer Orders</h2>
+                    <div id="orders-list"></div>
+                </div>
+            </div>
+        </div>
+        <div id="dashboard-message-container"></div>
     </div>
-
-    <div id="admin-dashboard" class="admin-container">
-        <div class="header">
-            <h1>Furniture Posts Admin</h1>
-            <p id="admin-uid-display">UID: Loading...</p>
-            <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
-
-        <div class="nav-tabs" id="nav-tabs">
-            <div class="tab active" data-tab="products">Manage Posts</div>
-            <div class="tab" data-tab="orders">View Orders</div>
-        </div>
-
-        <div id="tab-content">
-            <div id="products-tab" class="tab-content active">
-                <div id="product-form-container" style="margin-bottom: 30px;"></div>
-                <div id="product-list-container"></div>
-            </div>
-
-            <div id="orders-tab" class="tab-content">
-                <h2>Customer Orders</h2>
-                <div id="orders-list"></div>
-            </div>
-        </div>
-    </div>
-    <div id="dashboard-message-container"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -196,7 +230,7 @@
                     ${orders.length === 0 ? '<p style="text-align: center; color: #999;">No orders found.</p>' : orders.map(order => `
                         <div class="order-card" style="border-left: 4px solid var(--success-color);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <p style="font-weight: 600;">Order ID: ${order.id.substring(0, 8)}...}</p>
+                                <p style="font-weight: 600;">Order ID: ${order.id.substring(0, 8)}...</p>
                                 <button data-id="${order.id}" data-action="delete-order" class="btn-delete" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button>
                             </div>
                             <p style="font-weight: 700; color: var(--primary-color);">Total: $${order.total.toFixed(2)}</p>
@@ -459,7 +493,7 @@
 
         let productsCache = [];
         let cart = [];
-        let adminUIDCache = null;
+        let adminUIDCache = null; 
 
         // --- RTDB References ---
         const getProductsRef = () => ref(rtdb, 'products');
@@ -745,3 +779,4 @@
     </script>
 </body>
 </html>
+```eof
