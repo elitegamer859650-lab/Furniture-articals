@@ -196,7 +196,7 @@
                     ${orders.length === 0 ? '<p style="text-align: center; color: #999;">No orders found.</p>' : orders.map(order => `
                         <div class="order-card" style="border-left: 4px solid var(--success-color);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <p style="font-weight: 600;">Order ID: ${order.id.substring(0, 8)}...</p>
+                                <p style="font-weight: 600;">Order ID: ${order.id.substring(0, 8)}...}</p>
                                 <button data-id="${order.id}" data-action="delete-order" class="btn-delete" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button>
                             </div>
                             <p style="font-weight: 700; color: var(--primary-color);">Total: $${order.total.toFixed(2)}</p>
