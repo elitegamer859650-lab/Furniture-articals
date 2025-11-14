@@ -76,7 +76,7 @@
 
         let productsCache = [];
         let cart = [];
-        let adminUIDCache = null;
+        let adminUIDCache = null; // Used to know where to save orders in the admin's database
 
         // --- RTDB References ---
         const getProductsRef = () => ref(rtdb, 'products');
