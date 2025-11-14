@@ -549,6 +549,7 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const auth = firebase.auth();
 
         // Authorized users
         const authorizedUsers = [
@@ -574,7 +575,7 @@
                             category: "living-room",
                             image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
                             whatsappMessage: "I'm interested in the Modern Leather Sofa",
-                            createdAt: new Date().toLocaleDateString()
+                            createdAt: new Date().toISOString()
                         },
                         {
                             id: "2", 
@@ -583,7 +584,7 @@
                             category: "living-room",
                             image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
                             whatsappMessage: "I'm interested in the Wooden Dining Table",
-                            createdAt: new Date().toLocaleDateString()
+                            createdAt: new Date().toISOString()
                         }
                     ];
                     
@@ -602,6 +603,8 @@
                 snapshot.forEach(childSnapshot => {
                     posts.push(childSnapshot.val());
                 });
+                // Sort posts by creation date (newest first)
+                posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 callback(posts);
             });
         }
@@ -752,14 +755,17 @@
         // Add/Edit new post - FIXED VERSION
         postForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("Form submitted"); // Debug log
             
-            const title = document.getElementById('post-title').value;
-            const description = document.getElementById('post-description').value;
+            const title = document.getElementById('post-title').value.trim();
+            const description = document.getElementById('post-description').value.trim();
             const category = document.getElementById('post-category').value;
-            const whatsappMessage = document.getElementById('whatsapp-message').value || "I'm interested in this furniture post";
+            const whatsappMessage = document.getElementById('whatsapp-message').value.trim() || "I'm interested in this furniture post";
 
-            console.log("Form data:", { title, description, category, whatsappMessage }); // Debug log
+            // Validate required fields
+            if (!title || !description || !category) {
+                showMessage('Please fill in all required fields', 'error');
+                return;
+            }
 
             let imageData = '';
 
@@ -770,7 +776,7 @@
                 }
                 imageData = uploadedImageData || document.getElementById('edit-post-id').dataset.currentImage;
             } else {
-                const url = imageUrl.value;
+                const url = imageUrl.value.trim();
                 if (!url && !isEditing) {
                     showMessage('Please enter an image URL', 'error');
                     return;
@@ -778,11 +784,8 @@
                 imageData = url || document.getElementById('edit-post-id').dataset.currentImage;
             }
 
-            console.log("Image data:", imageData ? "Image provided" : "No image"); // Debug log
-
             if (isEditing) {
                 // Update existing post
-                console.log("Editing post:", currentEditId); // Debug log
                 const updatedPost = {
                     id: currentEditId,
                     title,
@@ -790,12 +793,11 @@
                     category,
                     whatsappMessage,
                     image: imageData,
-                    createdAt: document.getElementById('edit-post-id').dataset.createdAt || new Date().toLocaleDateString()
+                    createdAt: document.getElementById('edit-post-id').dataset.createdAt || new Date().toISOString()
                 };
                 
                 // Save to Firebase
                 savePost(updatedPost).then(() => {
-                    console.log("Post updated successfully"); // Debug log
                     showMessage('Post updated successfully!', 'success');
                     resetForm();
                     loadPosts();
@@ -813,14 +815,11 @@
                     category,
                     whatsappMessage,
                     image: imageData,
-                    createdAt: new Date().toLocaleDateString()
+                    createdAt: new Date().toISOString()
                 };
-
-                console.log("Adding new post:", newPost); // Debug log
 
                 // Save to Firebase
                 savePost(newPost).then(() => {
-                    console.log("Post added successfully"); // Debug log
                     showMessage('Post added successfully!', 'success');
                     resetForm();
                     loadPosts();
@@ -913,7 +912,7 @@
                             <div class="product-title">${post.title}</div>
                             <div class="product-description">${post.description}</div>
                             <div style="font-size: 12px; color: #888; margin-bottom: 10px;">
-                                Category: ${post.category} | Added: ${post.createdAt}
+                                Category: ${post.category} | Added: ${new Date(post.createdAt).toLocaleDateString()}
                             </div>
                             <div class="product-actions">
                                 <button class="btn btn-edit" onclick="editPost('${post.id}')">
