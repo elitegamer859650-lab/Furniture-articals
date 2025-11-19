@@ -1360,5 +1360,21 @@
         data-type="default"
         src="https://app.thinkstack.ai/bot/thinkstackai-loader.min.js"
     ></script>
+</script>
+<div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); text-align: center; z-index: 1000;">
+    <h2 style="color: #e74c3c; margin-bottom: 15px;">Your site is blocked by MGP Studio</h2>
+    <button onclick="showReason()" style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
+        See Reason
+    </button>
+    <div id="reason" style="display: none; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+        <p style="color: #2c3e50; margin: 0;">Your site was blocked because you are not posting on it. Upload 5 posts to unblock your site.</p>
+    </div>
+</div>
+
+<script>
+    function showReason() {
+        document.getElementById('reason').style.display = 'block';
+    }
+</script>
 </body>
 </html>
