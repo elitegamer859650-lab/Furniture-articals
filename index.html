@@ -1789,63 +1789,7 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
     window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
 });
 </script>
-    <div class="site-content" style="filter: blur(5px); pointer-events: none; height: 100vh; user-select: none;">
-    <!-- Your existing website content goes here -->
     
-    <h1>Your Website Content</h1>
-    <p>This is your normal website content that will be blurred and frozen.</p>
-    
-    <!-- Example of elements that will be frozen -->
-    <button>This button won't work</button>
-    <a href="#">This link won't work</a>
-    <input type="text" placeholder="This input won't work">
-</div>
-
-<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998;"></div>
-
-<div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); text-align: center; z-index: 9999;">
-    <h2 style="color: #e74c3c; margin-bottom: 15px;">Your site is blocked by MGP Studio</h2>
-    <button onclick="showReason()" style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">
-        See Reason
-    </button>
-    <div id="reason" style="display: none; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
-        <p style="color: #2c3e50; margin: 0;">Your site was blocked because you are not posting on it. Upload 5 posts to unblock your site.</p>
-    </div>
-</div>
-
-<script>
-    function showReason() {
-        document.getElementById('reason').style.display = 'block';
-    }
-    
-    // Freeze all keyboard events
-    document.addEventListener('keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    });
-    
-    // Freeze all mouse events on the blurred content
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('div[style*="z-index: 9999"]')) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
-    }, true);
-    
-    // Freeze right-click context menu
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // Freeze text selection
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-</script>
 
 </body>
 </html>
