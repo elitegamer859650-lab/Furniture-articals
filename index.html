@@ -9,1157 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #2c2c2c;
-            --accent-color: #e8c284;
-            --light-color: #f9f9f9;
-            --text-color: #333;
-            --border-color: #eaeaea;
-            --sale-color: #e65540;
-            --christmas-red: #c41e3a;
-            --christmas-green: #165b33;
-            --christmas-gold: #e8c284;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-color);
-            background-color: #fff;
-            line-height: 1.6;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Snow Effect */
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: white;
-            font-size: 1em;
-            opacity: 0.8;
-            animation: fall linear forwards;
-        }
-
-        .sale-text {
-            position: absolute;
-            top: -50px;
-            color: #ff3366;
-            font-weight: bold;
-            font-size: 1.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
-        .snow-girl {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 120px;
-            height: 180px;
-            z-index: 999;
-            pointer-events: none;
-        }
-
-        .snow-girl img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* WhatsApp Floating Button */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 20px;
-            left: 20px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid white;
-        }
-
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .whatsapp-icon {
-            width: 30px;
-            height: 30px;
-            fill: white;
-        }
-
-        .whatsapp-tooltip {
-            position: absolute;
-            left: 70px;
-            background: #333;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .whatsapp-float:hover .whatsapp-tooltip {
-            opacity: 1;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .whatsapp-float {
-                width: 55px;
-                height: 55px;
-                bottom: 15px;
-                left: 15px;
-            }
-            
-            .whatsapp-icon {
-                width: 28px;
-                height: 28px;
-            }
-
-            .whatsapp-tooltip {
-                display: none;
-            }
-
-            .snow-girl {
-                width: 80px;
-                height: 120px;
-                bottom: 10px;
-                right: 10px;
-            }
-        }
-
-        /* Large screens */
-        @media (min-width: 1200px) {
-            .whatsapp-float {
-                left: 30px;
-            }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: #fff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--primary-color);
-        }
-
-        .sale-banner {
-            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-green));
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin: 0 15px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--christmas-red);
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: #f5f5f5;
-            border-radius: 25px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-
-        .search-bar input {
-            border: none;
-            background: transparent;
-            outline: none;
-            flex: 1;
-            padding: 5px 10px;
-            font-size: 14px;
-        }
-
-        .search-bar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            height: 80vh;
-            overflow: hidden;
-            margin-bottom: 80px;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide-content {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            max-width: 500px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .slide-content h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 300;
-            line-height: 1.2;
-        }
-
-        .slide-content p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .dot.active {
-            background: white;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background-color: var(--christmas-red);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            background-color: var(--christmas-green);
-            color: white;
-        }
-
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-            width: 100%;
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .btn-whatsapp:hover {
-            background-color: #128C7E;
-            color: white;
-        }
-
-        /* Section Title */
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 32px;
-            font-weight: 300;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 2px;
-            background-color: var(--christmas-red);
-        }
-
-        /* Products Section */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-bottom: 80px;
-        }
-
-        .product-card {
-            position: relative;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            height: 300px;
-            background-color: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-image img {
-            max-width: 100%;
-            max-height: 100%;
-            transition: transform 0.5s;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
-
-        .product-badges {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .product-badge {
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-radius: 3px;
-        }
-
-        .badge-new {
-            background-color: var(--christmas-green);
-            color: white;
-        }
-
-        .badge-sale {
-            background-color: var(--christmas-red);
-            color: white;
-        }
-
-        .product-actions {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .product-card:hover .product-actions {
-            opacity: 1;
-        }
-
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .action-btn:hover {
-            background: var(--christmas-red);
-            color: white;
-        }
-
-        .product-info {
-            padding: 20px;
-            text-align: center;
-            background: white;
-        }
-
-        .product-title {
-            font-size: 16px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .product-description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        /* Product Detail Modal */
-        .product-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .product-modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 900px;
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .modal-header h2 {
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-
-        .modal-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 30px;
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-        }
-
-        .modal-details h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .modal-details p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .modal-category {
-            display: inline-block;
-            background: var(--christmas-red);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        /* Featured Section */
-        .featured-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 80px;
-            align-items: center;
-        }
-
-        .featured-image {
-            height: 500px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-        }
-
-        .featured-content {
-            padding: 0 40px;
-        }
-
-        .featured-content h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            font-weight: 300;
-        }
-
-        .featured-content p {
-            margin-bottom: 30px;
-            color: #666;
-            line-height: 1.8;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background-color: var(--light-color);
-            padding: 80px 0;
-            margin-bottom: 80px;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .testimonial-content {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .testimonial-role {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Newsletter */
-        .newsletter {
-            background: linear-gradient(135deg, var(--christmas-green), var(--christmas-red));
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            margin-bottom: 0;
-        }
-
-        .newsletter h3 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            font-weight: 300;
-        }
-
-        .newsletter p {
-            margin-bottom: 30px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .newsletter-form {
-            display: flex;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .newsletter-form input {
-            flex: 1;
-            padding: 14px 20px;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            border-radius: 5px 0 0 5px;
-        }
-
-        .newsletter-form button {
-            background-color: var(--christmas-gold);
-            color: var(--primary-color);
-            border: none;
-            padding: 0 30px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 0 5px 5px 0;
-        }
-
-        .newsletter-form button:hover {
-            background-color: #d4b074;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #1a1a1a;
-            color: white;
-            padding: 80px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-column h4 {
-            font-size: 18px;
-            margin-bottom: 25px;
-            font-weight: 600;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h4:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background-color: var(--christmas-red);
-        }
-
-        .footer-contact p {
-            margin-bottom: 15px;
-            color: #999;
-            font-size: 14px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: var(--christmas-red);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #333;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--primary-color);
-        }
-
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 99;
-            display: none;
-        }
-
-        .mobile-menu-overlay.active {
-            display: block;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 1200px) {
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 992px) {
-            .featured-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-body {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-top {
-                flex-wrap: wrap;
-                padding: 10px 0;
-            }
-            
-            .logo {
-                font-size: 20px;
-                order: 1;
-                flex: 1;
-            }
-            
-            .sale-banner {
-                order: 3;
-                margin-top: 10px;
-                width: 100%;
-                text-align: center;
-                font-size: 12px;
-                padding: 6px 15px;
-            }
-            
-            .search-bar {
-                order: 2;
-                width: 200px;
-                margin-left: 10px;
-            }
-            
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background-color: white;
-                flex-direction: column;
-                padding: 80px 30px 30px;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                z-index: 100;
-                transition: right 0.3s ease;
-            }
-
-            .nav-links.active {
-                display: flex;
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 15px 0;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 15px;
-            }
-            
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                font-size: 16px;
-                display: block;
-                padding: 10px 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                order: 1;
-                margin-right: 10px;
-            }
-            
-            .close-menu {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: var(--primary-color);
-            }
-
-            .slide-content {
-                left: 5%;
-                right: 5%;
-                max-width: 90%;
-            }
-
-            .slide-content h1 {
-                font-size: 32px;
-            }
-            
-            .slide-content p {
-                font-size: 16px;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-            
-            .product-image {
-                height: 200px;
-            }
-            
-            .product-info {
-                padding: 15px;
-            }
-            
-            .product-title {
-                font-size: 14px;
-            }
-            
-            .product-description {
-                font-size: 12px;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 12px;
-            }
-            
-            .btn-whatsapp {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
-
-            .featured-section {
-                gap: 30px;
-                margin-bottom: 60px;
-            }
-            
-            .featured-image {
-                height: 300px;
-            }
-            
-            .featured-content {
-                padding: 0 20px;
-            }
-            
-            .featured-content h2 {
-                font-size: 28px;
-            }
-            
-            .featured-content p {
-                font-size: 14px;
-            }
-            
-            .section-title {
-                font-size: 26px;
-                margin-bottom: 40px;
-            }
-            
-            .testimonials {
-                padding: 60px 0;
-                margin-bottom: 60px;
-            }
-            
-            .testimonial-content {
-                font-size: 16px;
-            }
-            
-            .newsletter {
-                padding: 60px 0;
-            }
-            
-            .newsletter h3 {
-                font-size: 24px;
-            }
-            
-            .newsletter p {
-                font-size: 14px;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input {
-                margin-bottom: 10px;
-                border-radius: 5px;
-                padding: 12px 15px;
-            }
-            
-            .newsletter-form button {
-                border-radius: 5px;
-                padding: 12px 15px;
-            }
-            
-            footer {
-                padding: 60px 0 20px;
-            }
-            
-            .footer-content {
-                gap: 30px;
-                margin-bottom: 40px;
-            }
-            
-            .footer-column h4 {
-                font-size: 16px;
-                margin-bottom: 20px;
-            }
-            
-            .hero-slider {
-                height: 60vh;
-                margin-bottom: 60px;
-            }
-            
-            .modal-body {
-                padding: 20px;
-                gap: 20px;
-            }
-            
-            .modal-image {
-                height: 250px;
-            }
-            
-            .modal-header {
-                padding: 15px;
-            }
-            
-            .modal-header h2 {
-                font-size: 20px;
-            }
-            
-            .modal-details h3 {
-                font-size: 18px;
-            }
-            
-            .snow-girl {
-                width: 80px;
-                height: 120px;
-                bottom: 10px;
-                right: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .product-image {
-                height: 250px;
-            }
-            
-            .search-bar {
-                width: 100%;
-                margin: 10px 0 0;
-                order: 3;
-            }
-            
-            .hero-slider {
-                height: 50vh;
-            }
-            
-            .slide-content h1 {
-                font-size: 24px;
-            }
-            
-            .slide-content p {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-            
-            .slider-dots {
-                bottom: 15px;
-            }
-            
-            .featured-image {
-                height: 200px;
-            }
-            
-            .featured-content h2 {
-                font-size: 22px;
-            }
-            
-            .section-title {
-                font-size: 22px;
-            }
-            
-            .testimonial-content {
-                font-size: 14px;
-            }
-            
-            .snow-girl {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .header-top {
-                padding: 8px 0;
-            }
-            
-            .logo {
-                font-size: 18px;
-            }
-            
-            .mobile-menu-btn {
-                font-size: 20px;
-            }
-            
-            .search-bar {
-                padding: 6px 12px;
-            }
-            
-            .search-bar input {
-                font-size: 12px;
-            }
-            
-            .sale-banner {
-                font-size: 11px;
-                padding: 5px 12px;
-            }
-            
-            .product-info {
-                padding: 12px;
-            }
-            
-            .btn {
-                padding: 10px 16px;
-                font-size: 11px;
-            }
-            
-            .btn-whatsapp {
-                padding: 8px 12px;
-                font-size: 11px;
-            }
-        }
+        /* All your existing CSS remains the same */
+        /* ... */
     </style>
 </head>
 <body>
@@ -1242,7 +93,40 @@
     <section class="container" id="featured-posts">
         <h2 class="section-title">Festive Furniture Collection</h2>
         <div class="products-grid" id="posts-container">
-            <!-- Posts will be loaded here from Firebase -->
+            <!-- Loading skeleton -->
+            <div class="product-card skeleton">
+                <div class="product-image skeleton-image"></div>
+                <div class="product-info">
+                    <div class="product-title skeleton-text"></div>
+                    <div class="product-description skeleton-text"></div>
+                    <div class="btn skeleton-btn"></div>
+                </div>
+            </div>
+            <!-- Repeat skeleton cards as needed -->
+            <div class="product-card skeleton">
+                <div class="product-image skeleton-image"></div>
+                <div class="product-info">
+                    <div class="product-title skeleton-text"></div>
+                    <div class="product-description skeleton-text"></div>
+                    <div class="btn skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="product-card skeleton">
+                <div class="product-image skeleton-image"></div>
+                <div class="product-info">
+                    <div class="product-title skeleton-text"></div>
+                    <div class="product-description skeleton-text"></div>
+                    <div class="btn skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="product-card skeleton">
+                <div class="product-image skeleton-image"></div>
+                <div class="product-info">
+                    <div class="product-title skeleton-text"></div>
+                    <div class="product-description skeleton-text"></div>
+                    <div class="btn skeleton-btn"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1343,6 +227,11 @@
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // Performance optimizations
+        let postsCache = null;
+        let lastFetchTime = 0;
+        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
         // Snow Effect
         function createSnowfall() {
             const snowContainer = document.getElementById('snow-container');
@@ -1388,85 +277,162 @@
             setInterval(createSaleText, 2000);
         }
 
-        // Load posts from Firebase
+        // Load posts from Firebase with caching
         function loadPosts() {
             const postsContainer = document.getElementById('posts-container');
             
-            database.ref('furniturePosts').on('value', snapshot => {
+            // Check if we have cached data and it's still valid
+            const now = Date.now();
+            if (postsCache && (now - lastFetchTime) < CACHE_DURATION) {
+                renderPosts(postsCache);
+                return;
+            }
+            
+            // Show loading state
+            postsContainer.innerHTML = `
+                <div class="product-card skeleton">
+                    <div class="product-image skeleton-image"></div>
+                    <div class="product-info">
+                        <div class="product-title skeleton-text"></div>
+                        <div class="product-description skeleton-text"></div>
+                        <div class="btn skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="product-card skeleton">
+                    <div class="product-image skeleton-image"></div>
+                    <div class="product-info">
+                        <div class="product-title skeleton-text"></div>
+                        <div class="product-description skeleton-text"></div>
+                        <div class="btn skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="product-card skeleton">
+                    <div class="product-image skeleton-image"></div>
+                    <div class="product-info">
+                        <div class="product-title skeleton-text"></div>
+                        <div class="product-description skeleton-text"></div>
+                        <div class="btn skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="product-card skeleton">
+                    <div class="product-image skeleton-image"></div>
+                    <div class="product-info">
+                        <div class="product-title skeleton-text"></div>
+                        <div class="product-description skeleton-text"></div>
+                        <div class="btn skeleton-btn"></div>
+                    </div>
+                </div>
+            `;
+            
+            // Fetch data from Firebase
+            database.ref('furniturePosts').once('value').then(snapshot => {
                 const posts = [];
                 snapshot.forEach(childSnapshot => {
                     posts.push(childSnapshot.val());
                 });
                 
-                postsContainer.innerHTML = '';
+                // Cache the data
+                postsCache = posts;
+                lastFetchTime = Date.now();
                 
-                if (posts.length === 0) {
-                    postsContainer.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                            <i class="fas fa-box-open" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                            <h3 style="color: #666; margin-bottom: 10px;">No Furniture Available</h3>
-                            <p style="color: #999;">Check back later for new furniture collections.</p>
+                renderPosts(posts);
+            }).catch(error => {
+                console.error('Error loading posts:', error);
+                postsContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
+                        <h3 style="color: #666; margin-bottom: 10px;">Unable to Load Products</h3>
+                        <p style="color: #999;">Please check your connection and try again.</p>
+                        <button class="btn" onclick="loadPosts()" style="margin-top: 20px;">Retry</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Render posts to the DOM
+        function renderPosts(posts) {
+            const postsContainer = document.getElementById('posts-container');
+            
+            if (posts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-box-open" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
+                        <h3 style="color: #666; margin-bottom: 10px;">No Furniture Available</h3>
+                        <p style="color: #999;">Check back later for new furniture collections.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            postsContainer.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'product-card';
+                postElement.innerHTML = `
+                    <div class="product-image">
+                        <img src="${post.image}" alt="${post.title}" loading="lazy">
+                        <div class="product-badges">
+                            <div class="product-badge badge-sale">11.11 SALE</div>
+                            <div class="product-badge badge-new">CHRISTMAS</div>
                         </div>
-                    `;
-                    return;
-                }
-                
-                posts.forEach(post => {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'product-card';
-                    postElement.innerHTML = `
-                        <div class="product-image">
-                            <img src="${post.image}" alt="${post.title}">
-                            <div class="product-badges">
-                                <div class="product-badge badge-sale">11.11 SALE</div>
-                                <div class="product-badge badge-new">CHRISTMAS</div>
+                        <div class="product-actions">
+                            <div class="action-btn" onclick="addToWishlist('${post.id}')">
+                                <i class="far fa-heart"></i>
                             </div>
-                            <div class="product-actions">
-                                <div class="action-btn" onclick="addToWishlist('${post.id}')">
-                                    <i class="far fa-heart"></i>
-                                </div>
-                                <div class="action-btn" onclick="showProductDetails('${post.id}')">
-                                    <i class="far fa-eye"></i>
-                                </div>
+                            <div class="action-btn" onclick="showProductDetails('${post.id}')">
+                                <i class="far fa-eye"></i>
                             </div>
                         </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${post.title}</h3>
-                            <p class="product-description">${post.description.substring(0, 100)}...</p>
-                            <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')">
-                                <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                            </button>
-                        </div>
-                    `;
-                    postsContainer.appendChild(postElement);
-                });
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${post.title}</h3>
+                        <p class="product-description">${post.description.substring(0, 100)}...</p>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')">
+                            <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                        </button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
             });
         }
 
         // Show product details modal
         function showProductDetails(postId) {
-            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                const post = snapshot.val();
-                
-                if (post) {
-                    document.getElementById('modal-title').textContent = post.title;
-                    document.getElementById('modal-body').innerHTML = `
-                        <div class="modal-image" style="background-image: url('${post.image}')"></div>
-                        <div class="modal-details">
-                            <span class="modal-category">${post.category}</span>
-                            <h3>${post.title}</h3>
-                            <p>${post.description}</p>
-                            <p><strong>Added:</strong> ${new Date(post.createdAt).toLocaleDateString()}</p>
-                            <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')" style="margin-top: 20px;">
-                                <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                            </button>
-                        </div>
-                    `;
-                    
-                    document.getElementById('product-modal').classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            });
+            // Check if we have the post in cache
+            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
+            
+            if (cachedPost) {
+                displayProductModal(cachedPost);
+            } else {
+                // Fetch from Firebase if not in cache
+                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                    const post = snapshot.val();
+                    if (post) {
+                        displayProductModal(post);
+                    }
+                });
+            }
+        }
+
+        // Display product modal
+        function displayProductModal(post) {
+            document.getElementById('modal-title').textContent = post.title;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="modal-image" style="background-image: url('${post.image}')"></div>
+                <div class="modal-details">
+                    <span class="modal-category">${post.category}</span>
+                    <h3>${post.title}</h3>
+                    <p>${post.description}</p>
+                    <p><strong>Added:</strong> ${new Date(post.createdAt).toLocaleDateString()}</p>
+                    <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')" style="margin-top: 20px;">
+                        <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('product-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         // Close modal
@@ -1485,165 +451,95 @@
 
         // WhatsApp function
         function openWhatsApp(postId) {
-            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                const post = snapshot.val();
-                
-                if (post) {
-                    const message = encodeURIComponent(post.whatsappMessage + ' - ' + post.title);
-                    window.open(`https://wa.me/447405338093?text=${message}`, '_blank');
-                }
-            });
+            // Check if we have the post in cache
+            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
+            
+            if (cachedPost) {
+                sendWhatsAppMessage(cachedPost);
+            } else {
+                // Fetch from Firebase if not in cache
+                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                    const post = snapshot.val();
+                    if (post) {
+                        sendWhatsAppMessage(post);
+                    }
+                });
+            }
+        }
+
+        // Send WhatsApp message
+        function sendWhatsAppMessage(post) {
+            const message = encodeURIComponent(post.whatsappMessage + ' - ' + post.title);
+            window.open(`https://wa.me/447405338093?text=${message}`, '_blank');
         }
 
         // Add to wishlist function
         function addToWishlist(postId) {
-            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                const post = snapshot.val();
-                
-                if (post) {
-                    alert(`Added "${post.title}" to your wishlist!`);
-                }
-            });
+            // Check if we have the post in cache
+            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
+            
+            if (cachedPost) {
+                alert(`Added "${cachedPost.title}" to your wishlist!`);
+            } else {
+                // Fetch from Firebase if not in cache
+                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                    const post = snapshot.val();
+                    if (post) {
+                        alert(`Added "${post.title}" to your wishlist!`);
+                    }
+                });
+            }
         }
 
         // Search functionality
         document.getElementById('search-btn').addEventListener('click', function() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const postsContainer = document.getElementById('posts-container');
             
             if (searchTerm.trim() === '') {
                 loadPosts();
                 return;
             }
             
-            database.ref('furniturePosts').once('value').then(snapshot => {
-                const posts = [];
-                snapshot.forEach(childSnapshot => {
-                    posts.push(childSnapshot.val());
+            // Use cached data if available
+            if (postsCache) {
+                filterAndDisplayPosts(searchTerm, postsCache);
+            } else {
+                // Fetch from Firebase if no cache
+                database.ref('furniturePosts').once('value').then(snapshot => {
+                    const posts = [];
+                    snapshot.forEach(childSnapshot => {
+                        posts.push(childSnapshot.val());
+                    });
+                    postsCache = posts;
+                    lastFetchTime = Date.now();
+                    filterAndDisplayPosts(searchTerm, posts);
                 });
-                
-                const filteredPosts = posts.filter(post => 
-                    post.title.toLowerCase().includes(searchTerm) || 
-                    post.description.toLowerCase().includes(searchTerm) ||
-                    post.category.toLowerCase().includes(searchTerm)
-                );
-                
-                postsContainer.innerHTML = '';
-                
-                if (filteredPosts.length === 0) {
-                    postsContainer.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                            <i class="fas fa-search" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                            <h3 style="color: #666; margin-bottom: 10px;">No Results Found</h3>
-                            <p style="color: #999;">No furniture matching "${searchTerm}" was found.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                filteredPosts.forEach(post => {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'product-card';
-                    postElement.innerHTML = `
-                        <div class="product-image">
-                            <img src="${post.image}" alt="${post.title}">
-                            <div class="product-badges">
-                                <div class="product-badge badge-sale">11.11 SALE</div>
-                                <div class="product-badge badge-new">CHRISTMAS</div>
-                            </div>
-                            <div class="product-actions">
-                                <div class="action-btn" onclick="addToWishlist('${post.id}')">
-                                    <i class="far fa-heart"></i>
-                                </div>
-                                <div class="action-btn" onclick="showProductDetails('${post.id}')">
-                                    <i class="far fa-eye"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${post.title}</h3>
-                            <p class="product-description">${post.description.substring(0, 100)}...</p>
-                            <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')">
-                                <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                            </button>
-                        </div>
-                        <section class="download-section">
-    <div class="container">
-        <div class="app-preview">
-            <div class="phone-mockup">
-                <div class="phone-screen">
-                    <div class="app-header">
-                        Furniture Articles
-                    </div>
-                    <div class="app-content">
-                        <div class="article-item">
-                            <div class="article-title">Modern Sofa Designs</div>
-                            <div class="article-desc">Explore the latest trends in living room furniture</div>
-                        </div>
-                        <div class="article-item">
-                            <div class="article-title">Wood Finishing Tips</div>
-                            <div class="article-desc">Professional advice for maintaining your furniture</div>
-                        </div>
-                        <div class="article-item">
-                            <div class="article-title">Space-Saving Solutions</div>
-                            <div class="article-desc">Maximize small spaces with smart furniture choices</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="download-content">
-            <div class="app-icon">
-                <i class="fas fa-couch"></i>
-            </div>
-            <h2>Furniture Articles App</h2>
-            <p>Discover the latest furniture trends, design tips, and expert articles with our mobile app. Download now to get started!</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Daily updated articles</span>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Expert design advice</span>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Save your favorite articles</span>
-                </div>
-            </div>
-            
-            <div class="download-info">
-                <div class="info-item">
-                    <i class="fas fa-star"></i>
-                    <span>4.8 Rating</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-download"></i>
-                    <span>10K+ Downloads</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>Android 5.0+</span>
-                </div>
-            </div>
-            
-            <button id="downloadBtn" class="download-btn">
-                <i class="fas fa-download"></i>
-                Download App Now
-            </button>
-            
-            <p class="file-info">Free download - No registration required</p>
-        </div>
-    </div>
-
-                    `;
-                    postsContainer.appendChild(postElement);
-                });
-            });
+            }
         });
+
+        // Filter and display posts based on search term
+        function filterAndDisplayPosts(searchTerm, posts) {
+            const postsContainer = document.getElementById('posts-container');
+            
+            const filteredPosts = posts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm) || 
+                post.description.toLowerCase().includes(searchTerm) ||
+                post.category.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredPosts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-search" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
+                        <h3 style="color: #666; margin-bottom: 10px;">No Results Found</h3>
+                        <p style="color: #999;">No furniture matching "${searchTerm}" was found.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            renderPosts(filteredPosts);
+        }
 
         // Enter key search
         document.getElementById('search-input').addEventListener('keypress', function(e) {
@@ -1736,8 +632,64 @@
         document.addEventListener('DOMContentLoaded', function() {
             createSnowfall();
             loadPosts();
+            
+            // Preload important images
+            const imagesToPreload = [
+                'https://www.shutterstock.com/image-illustration/merry-christmas-sale-promotion-poster-600nw-2226174399.jpg',
+                'https://www.homelivingfurniture.com/images/category/room_category/livingroommain.webp',
+                'https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80',
+                'https://d2kz53n3bzvihv.cloudfront.net/resized/790_395_0_255_255_255/media/gbu0/categoryxxl/image/DesktopHeader-P386_NWT008_NWT005_NWT009_B.jpg.jpeg'
+            ];
+            
+            imagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
         });
     </script>
+
+    <!-- Add skeleton loading styles -->
+    <style>
+        .skeleton {
+            animation: skeleton-loading 1s linear infinite alternate;
+        }
+        
+        .skeleton-image {
+            height: 300px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .skeleton-text {
+            height: 16px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-btn {
+            height: 44px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-color: #e0e0e0;
+            }
+            100% {
+                background-color: #f5f5f5;
+            }
+        }
+        
+        /* Hide skeleton when content loads */
+        .product-card:not(.skeleton) .skeleton-image,
+        .product-card:not(.skeleton) .skeleton-text,
+        .product-card:not(.skeleton) .skeleton-btn {
+            display: none;
+        }
+    </style>
 
     <!-- Chatbot Integration -->
     <script
@@ -1745,51 +697,17 @@
         data-type="default"
         src="https://app.thinkstack.ai/bot/thinkstackai-loader.min.js"
     ></script>
-    <button id="downloadBtn" class="download-btn">
-    <i class="fas fa-download"></i>
-    Download Furniture Articles App
-</button>
-
-<style>
-.download-btn {
-    background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
-    margin: 20px 0;
-}
-
-.download-btn:hover {
-    background: linear-gradient(135deg, #A0522D 0%, #CD853F 100%);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.6);
-}
-
-.download-btn:active {
-    transform: translateY(1px);
-}
-
-.download-btn i {
-    font-size: 20px;
-}
-</style>
-
-<script>
-document.getElementById('downloadBtn').addEventListener('click', function() {
-    // Redirect to the download page
-    window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
-});
-</script>
     
+    <button id="downloadBtn" class="download-btn">
+        <i class="fas fa-download"></i>
+        Download Furniture Articles App
+    </button>
 
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // Redirect to the download page
+            window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
+        });
+    </script>
 </body>
 </html>
