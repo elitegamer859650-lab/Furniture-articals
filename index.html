@@ -36,6 +36,129 @@
             overflow-x: hidden;
         }
 
+        /* Scanning Popup Styles */
+        .scanning-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(5px);
+        }
+
+        .scanning-popup.active {
+            display: flex;
+        }
+
+        .scanning-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popupAppear 0.5s ease-out;
+        }
+
+        @keyframes popupAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .scanning-icon {
+            font-size: 48px;
+            color: var(--christmas-red);
+            margin-bottom: 20px;
+            animation: scanning 2s infinite;
+        }
+
+        @keyframes scanning {
+            0% {
+                transform: scale(1);
+                color: var(--christmas-red);
+            }
+            50% {
+                transform: scale(1.1);
+                color: var(--christmas-green);
+            }
+            100% {
+                transform: scale(1);
+                color: var(--christmas-red);
+            }
+        }
+
+        .scanning-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .scanning-subtext {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .scanning-progress {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .scanning-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--christmas-red), var(--christmas-green));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .scanning-dots {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .scanning-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            animation: dotPulse 1.4s infinite ease-in-out;
+        }
+
+        .scanning-dot:nth-child(1) { animation-delay: -0.32s; }
+        .scanning-dot:nth-child(2) { animation-delay: -0.16s; }
+        .scanning-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                background: #ddd;
+            }
+            40% {
+                transform: scale(1.2);
+                background: var(--christmas-red);
+            }
+        }
+
         /* Snow Effect */
         .snow-container {
             position: fixed;
@@ -164,6 +287,18 @@
                 height: 120px;
                 bottom: 10px;
                 right: 10px;
+            }
+
+            .scanning-content {
+                padding: 30px 20px;
+            }
+
+            .scanning-icon {
+                font-size: 36px;
+            }
+
+            .scanning-text {
+                font-size: 16px;
             }
         }
 
@@ -779,6 +914,45 @@
             font-size: 14px;
         }
 
+        /* Download Button in Footer */
+        .download-app-section {
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 10px;
+        }
+
+        .download-btn {
+            background: white;
+            color: #8B4513;
+            border: none;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .download-btn i {
+            font-size: 20px;
+        }
+
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
@@ -1194,48 +1368,28 @@
                 background-color: #f5f5f5;
             }
         }
-        
-        /* Hide skeleton when content loads */
-        .product-card:not(.skeleton) .skeleton-image,
-        .product-card:not(.skeleton) .skeleton-text,
-        .product-card:not(.skeleton) .skeleton-btn {
-            display: none;
-        }
-
-        /* Download Button Styles */
-        .download-btn {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
-            margin: 20px 0;
-        }
-
-        .download-btn:hover {
-            background: linear-gradient(135deg, #A0522D 0%, #CD853F 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.6);
-        }
-
-        .download-btn:active {
-            transform: translateY(1px);
-        }
-
-        .download-btn i {
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
+    <!-- Scanning Popup -->
+    <div class="scanning-popup" id="scanning-popup">
+        <div class="scanning-content">
+            <div class="scanning-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="scanning-text">Wait a sec until we finish your scanning</div>
+            <div class="scanning-subtext">Loading the best furniture deals for you...</div>
+            <div class="scanning-progress">
+                <div class="scanning-progress-bar" id="scanning-progress"></div>
+            </div>
+            <div class="scanning-dots">
+                <div class="scanning-dot"></div>
+                <div class="scanning-dot"></div>
+                <div class="scanning-dot"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Snow Effect -->
     <div class="snow-container" id="snow-container"></div>
     <div class="snow-girl">
@@ -1407,6 +1561,17 @@
     <!-- Footer -->
     <footer>
         <div class="container">
+            <!-- Download App Section in Footer -->
+            <div class="download-app-section">
+                <h3 style="color: white; margin-bottom: 20px;">Download Our Mobile App</h3>
+                <p style="color: white; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Get the best furniture deals, exclusive collections, and design tips right on your phone. Download our app now!
+                </p>
+                <button class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download Furniture Articles App
+                </button>
+            </div>
+            
             <div class="footer-content">
                 <div class="footer-column">
                     <h4>Contact Information</h4>
@@ -1453,13 +1618,53 @@
         let lastFetchTime = 0;
         const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
+        // Scanning popup functions
+        function showScanningPopup() {
+            const scanningPopup = document.getElementById('scanning-popup');
+            const progressBar = document.getElementById('scanning-progress');
+            
+            scanningPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 90) {
+                    progress = 90;
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+            
+            return progressInterval;
+        }
+
+        function hideScanningPopup(progressInterval) {
+            const scanningPopup = document.getElementById('scanning-popup');
+            const progressBar = document.getElementById('scanning-progress');
+            
+            clearInterval(progressInterval);
+            
+            // Complete the progress bar
+            progressBar.style.width = '100%';
+            
+            setTimeout(() => {
+                scanningPopup.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Reset progress bar
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                }, 300);
+            }, 500);
+        }
+
         // Snow Effect
         function createSnowfall() {
             const snowContainer = document.getElementById('snow-container');
             const snowflakes = ['❄', '❅', '❆'];
             const colors = ['#ff3366', '#33ccff', '#ffcc00', '#ff66cc', '#66ff33'];
             
-            // Create snowflakes
             function createSnowflake() {
                 const snowflake = document.createElement('div');
                 snowflake.className = 'snowflake';
@@ -1475,7 +1680,6 @@
                 }, 5000);
             }
             
-            // Create colorful "Sale!" text
             function createSaleText() {
                 const saleText = document.createElement('div');
                 saleText.className = 'sale-text';
@@ -1491,21 +1695,24 @@
                 }, 10000);
             }
             
-            // Create snowflakes every 100ms
             setInterval(createSnowflake, 100);
-            
-            // Create "Sale!" text every 2 seconds
             setInterval(createSaleText, 2000);
         }
 
-        // Load posts from Firebase with caching
+        // Load posts from Firebase
         function loadPosts() {
             const postsContainer = document.getElementById('posts-container');
             
-            // Check if we have cached data and it's still valid
+            // Show scanning popup
+            const progressInterval = showScanningPopup();
+            
+            // Check if we have cached data
             const now = Date.now();
             if (postsCache && (now - lastFetchTime) < CACHE_DURATION) {
-                renderPosts(postsCache);
+                setTimeout(() => {
+                    renderPosts(postsCache);
+                    hideScanningPopup(progressInterval);
+                }, 1500);
                 return;
             }
             
@@ -1546,28 +1753,41 @@
             `;
             
             // Fetch data from Firebase
-            database.ref('furniturePosts').once('value').then(snapshot => {
-                const posts = [];
-                snapshot.forEach(childSnapshot => {
-                    posts.push(childSnapshot.val());
+            database.ref('furniturePosts').once('value')
+                .then(snapshot => {
+                    const posts = [];
+                    snapshot.forEach(childSnapshot => {
+                        posts.push(childSnapshot.val());
+                    });
+                    
+                    // Cache the data
+                    postsCache = posts;
+                    lastFetchTime = Date.now();
+                    
+                    // Add a small delay for better UX
+                    setTimeout(() => {
+                        renderPosts(posts);
+                        hideScanningPopup(progressInterval);
+                    }, 1000);
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                    hideScanningPopup(progressInterval);
+                    showLoadingError();
                 });
-                
-                // Cache the data
-                postsCache = posts;
-                lastFetchTime = Date.now();
-                
-                renderPosts(posts);
-            }).catch(error => {
-                console.error('Error loading posts:', error);
-                postsContainer.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                        <h3 style="color: #666; margin-bottom: 10px;">Unable to Load Products</h3>
-                        <p style="color: #999;">Please check your connection and try again.</p>
-                        <button class="btn" onclick="loadPosts()" style="margin-top: 20px;">Retry</button>
-                    </div>
-                `;
-            });
+        }
+
+        // Show loading error
+        function showLoadingError() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
+                    <h3 style="color: #666; margin-bottom: 10px;">Unable to Load Products</h3>
+                    <p style="color: #999;">Please check your connection and try again.</p>
+                    <button class="btn" onclick="loadPosts()" style="margin-top: 20px;">Try Again</button>
+                </div>
+            `;
         }
 
         // Render posts to the DOM
@@ -1620,40 +1840,28 @@
 
         // Show product details modal
         function showProductDetails(postId) {
-            // Check if we have the post in cache
-            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
-            
-            if (cachedPost) {
-                displayProductModal(cachedPost);
-            } else {
-                // Fetch from Firebase if not in cache
-                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                    const post = snapshot.val();
-                    if (post) {
-                        displayProductModal(post);
-                    }
-                });
-            }
-        }
-
-        // Display product modal
-        function displayProductModal(post) {
-            document.getElementById('modal-title').textContent = post.title;
-            document.getElementById('modal-body').innerHTML = `
-                <div class="modal-image" style="background-image: url('${post.image}')"></div>
-                <div class="modal-details">
-                    <span class="modal-category">${post.category}</span>
-                    <h3>${post.title}</h3>
-                    <p>${post.description}</p>
-                    <p><strong>Added:</strong> ${new Date(post.createdAt).toLocaleDateString()}</p>
-                    <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')" style="margin-top: 20px;">
-                        <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('product-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                const post = snapshot.val();
+                
+                if (post) {
+                    document.getElementById('modal-title').textContent = post.title;
+                    document.getElementById('modal-body').innerHTML = `
+                        <div class="modal-image" style="background-image: url('${post.image}')"></div>
+                        <div class="modal-details">
+                            <span class="modal-category">${post.category}</span>
+                            <h3>${post.title}</h3>
+                            <p>${post.description}</p>
+                            <p><strong>Added:</strong> ${new Date(post.createdAt).toLocaleDateString()}</p>
+                            <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')" style="margin-top: 20px;">
+                                <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('product-modal').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
         }
 
         // Close modal
@@ -1672,95 +1880,100 @@
 
         // WhatsApp function
         function openWhatsApp(postId) {
-            // Check if we have the post in cache
-            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
-            
-            if (cachedPost) {
-                sendWhatsAppMessage(cachedPost);
-            } else {
-                // Fetch from Firebase if not in cache
-                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                    const post = snapshot.val();
-                    if (post) {
-                        sendWhatsAppMessage(post);
-                    }
-                });
-            }
-        }
-
-        // Send WhatsApp message
-        function sendWhatsAppMessage(post) {
-            const message = encodeURIComponent(post.whatsappMessage + ' - ' + post.title);
-            window.open(`https://wa.me/447405338093?text=${message}`, '_blank');
+            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                const post = snapshot.val();
+                
+                if (post) {
+                    const message = encodeURIComponent(post.whatsappMessage + ' - ' + post.title);
+                    window.open(`https://wa.me/447405338093?text=${message}`, '_blank');
+                }
+            });
         }
 
         // Add to wishlist function
         function addToWishlist(postId) {
-            // Check if we have the post in cache
-            const cachedPost = postsCache ? postsCache.find(post => post.id === postId) : null;
-            
-            if (cachedPost) {
-                alert(`Added "${cachedPost.title}" to your wishlist!`);
-            } else {
-                // Fetch from Firebase if not in cache
-                database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                    const post = snapshot.val();
-                    if (post) {
-                        alert(`Added "${post.title}" to your wishlist!`);
-                    }
-                });
-            }
+            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
+                const post = snapshot.val();
+                
+                if (post) {
+                    alert(`Added "${post.title}" to your wishlist!`);
+                }
+            });
         }
 
         // Search functionality
         document.getElementById('search-btn').addEventListener('click', function() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const postsContainer = document.getElementById('posts-container');
             
             if (searchTerm.trim() === '') {
                 loadPosts();
                 return;
             }
             
-            // Use cached data if available
-            if (postsCache) {
-                filterAndDisplayPosts(searchTerm, postsCache);
-            } else {
-                // Fetch from Firebase if no cache
-                database.ref('furniturePosts').once('value').then(snapshot => {
-                    const posts = [];
-                    snapshot.forEach(childSnapshot => {
-                        posts.push(childSnapshot.val());
-                    });
-                    postsCache = posts;
-                    lastFetchTime = Date.now();
-                    filterAndDisplayPosts(searchTerm, posts);
+            // Show scanning popup for search
+            const progressInterval = showScanningPopup();
+            
+            database.ref('furniturePosts').once('value').then(snapshot => {
+                const posts = [];
+                snapshot.forEach(childSnapshot => {
+                    posts.push(childSnapshot.val());
                 });
-            }
+                
+                const filteredPosts = posts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) || 
+                    post.description.toLowerCase().includes(searchTerm) ||
+                    post.category.toLowerCase().includes(searchTerm)
+                );
+                
+                postsContainer.innerHTML = '';
+                
+                if (filteredPosts.length === 0) {
+                    postsContainer.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                            <i class="fas fa-search" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
+                            <h3 style="color: #666; margin-bottom: 10px;">No Results Found</h3>
+                            <p style="color: #999;">No furniture matching "${searchTerm}" was found.</p>
+                        </div>
+                    `;
+                } else {
+                    filteredPosts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'product-card';
+                        postElement.innerHTML = `
+                            <div class="product-image">
+                                <img src="${post.image}" alt="${post.title}">
+                                <div class="product-badges">
+                                    <div class="product-badge badge-sale">11.11 SALE</div>
+                                    <div class="product-badge badge-new">CHRISTMAS</div>
+                                </div>
+                                <div class="product-actions">
+                                    <div class="action-btn" onclick="addToWishlist('${post.id}')">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                    <div class="action-btn" onclick="showProductDetails('${post.id}')">
+                                        <i class="far fa-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${post.title}</h3>
+                                <p class="product-description">${post.description.substring(0, 100)}...</p>
+                                <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')">
+                                    <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                                </button>
+                            </div>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    });
+                }
+                
+                // Hide scanning popup
+                setTimeout(() => {
+                    hideScanningPopup(progressInterval);
+                }, 1000);
+            });
         });
-
-        // Filter and display posts based on search term
-        function filterAndDisplayPosts(searchTerm, posts) {
-            const postsContainer = document.getElementById('posts-container');
-            
-            const filteredPosts = posts.filter(post => 
-                post.title.toLowerCase().includes(searchTerm) || 
-                post.description.toLowerCase().includes(searchTerm) ||
-                post.category.toLowerCase().includes(searchTerm)
-            );
-            
-            if (filteredPosts.length === 0) {
-                postsContainer.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                        <i class="fas fa-search" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                        <h3 style="color: #666; margin-bottom: 10px;">No Results Found</h3>
-                        <p style="color: #999;">No furniture matching "${searchTerm}" was found.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            renderPosts(filteredPosts);
-        }
 
         // Enter key search
         document.getElementById('search-input').addEventListener('keypress', function(e) {
@@ -1843,38 +2056,15 @@
         const whatsappBtn = document.querySelector('.whatsapp-float');
         whatsappBtn.href = createWhatsAppURL();
 
+        // Download button functionality
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
+        });
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createSnowfall();
             loadPosts();
-            
-            // Preload important images
-            const imagesToPreload = [
-                'https://www.shutterstock.com/image-illustration/merry-christmas-sale-promotion-poster-600nw-2226174399.jpg',
-                'https://www.homelivingfurniture.com/images/category/room_category/livingroommain.webp',
-                'https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80',
-                'https://d2kz53n3bzvihv.cloudfront.net/resized/790_395_0_255_255_255/media/gbu0/categoryxxl/image/DesktopHeader-P386_NWT008_NWT005_NWT009_B.jpg.jpeg'
-            ];
-            
-            imagesToPreload.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        });
-
-        // Download Button
-        document.addEventListener('DOMContentLoaded', function() {
-            const downloadBtn = document.createElement('button');
-            downloadBtn.id = 'downloadBtn';
-            downloadBtn.className = 'download-btn';
-            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Furniture Articles App';
-            downloadBtn.style.cssText = 'position: fixed; bottom: 100px; left: 20px; z-index: 1000;';
-            
-            downloadBtn.addEventListener('click', function() {
-                window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
-            });
-            
-            document.body.appendChild(downloadBtn);
         });
     </script>
 
