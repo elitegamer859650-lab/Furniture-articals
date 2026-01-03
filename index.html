@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Furniture Articles - Christmas Sale</title>
+    <title>Furniture Articles - New Year Sale 2026</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
@@ -22,9 +22,10 @@
             --text-color: #333;
             --border-color: #eaeaea;
             --sale-color: #e65540;
-            --christmas-red: #c41e3a;
-            --christmas-green: #165b33;
-            --christmas-gold: #e8c284;
+            /* Updated for New Year Theme */
+            --ny-red: #c41e3a; 
+            --ny-gold: #d4af37; 
+            --ny-dark: #1a1a1a;
         }
 
         body {
@@ -43,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
@@ -67,36 +68,21 @@
         }
 
         @keyframes popupAppear {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.8) translateY(-20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .scanning-icon {
             font-size: 48px;
-            color: var(--christmas-red);
+            color: var(--ny-gold);
             margin-bottom: 20px;
             animation: scanning 2s infinite;
         }
 
         @keyframes scanning {
-            0% {
-                transform: scale(1);
-                color: var(--christmas-red);
-            }
-            50% {
-                transform: scale(1.1);
-                color: var(--christmas-green);
-            }
-            100% {
-                transform: scale(1);
-                color: var(--christmas-red);
-            }
+            0% { transform: scale(1); color: var(--ny-gold); }
+            50% { transform: scale(1.1); color: var(--ny-red); }
+            100% { transform: scale(1); color: var(--ny-gold); }
         }
 
         .scanning-text {
@@ -123,7 +109,7 @@
 
         .scanning-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--christmas-red), var(--christmas-green));
+            background: linear-gradient(90deg, var(--ny-gold), var(--ny-red));
             width: 0%;
             transition: width 0.3s ease;
             border-radius: 3px;
@@ -149,17 +135,11 @@
         .scanning-dot:nth-child(3) { animation-delay: 0s; }
 
         @keyframes dotPulse {
-            0%, 80%, 100% {
-                transform: scale(0.8);
-                background: #ddd;
-            }
-            40% {
-                transform: scale(1.2);
-                background: var(--christmas-red);
-            }
+            0%, 80%, 100% { transform: scale(0.8); background: #ddd; }
+            40% { transform: scale(1.2); background: var(--ny-gold); }
         }
 
-        /* Snow Effect */
+        /* Confetti / Snow Effect */
         .snow-container {
             position: fixed;
             top: 0;
@@ -173,7 +153,7 @@
         .snowflake {
             position: absolute;
             top: -10px;
-            color: white;
+            color: var(--ny-gold);
             font-size: 1em;
             opacity: 0.8;
             animation: fall linear forwards;
@@ -182,7 +162,7 @@
         .sale-text {
             position: absolute;
             top: -50px;
-            color: #ff3366;
+            color: var(--ny-red);
             font-weight: bold;
             font-size: 1.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -190,25 +170,7 @@
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
-        .snow-girl {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 120px;
-            height: 180px;
-            z-index: 999;
-            pointer-events: none;
-        }
-
-        .snow-girl img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            to { transform: translateY(100vh); }
         }
 
         /* WhatsApp Floating Button */
@@ -266,47 +228,16 @@
 
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            .whatsapp-float {
-                width: 55px;
-                height: 55px;
-                bottom: 15px;
-                left: 15px;
-            }
-            
-            .whatsapp-icon {
-                width: 28px;
-                height: 28px;
-            }
-
-            .whatsapp-tooltip {
-                display: none;
-            }
-
-            .snow-girl {
-                width: 80px;
-                height: 120px;
-                bottom: 10px;
-                right: 10px;
-            }
-
-            .scanning-content {
-                padding: 30px 20px;
-            }
-
-            .scanning-icon {
-                font-size: 36px;
-            }
-
-            .scanning-text {
-                font-size: 16px;
-            }
+            .whatsapp-float { width: 55px; height: 55px; bottom: 15px; left: 15px; }
+            .whatsapp-icon { width: 28px; height: 28px; }
+            .whatsapp-tooltip { display: none; }
+            .scanning-content { padding: 30px 20px; }
+            .scanning-icon { font-size: 36px; }
+            .scanning-text { font-size: 16px; }
         }
 
-        /* Large screens */
         @media (min-width: 1200px) {
-            .whatsapp-float {
-                left: 30px;
-            }
+            .whatsapp-float { left: 30px; }
         }
 
         .container {
@@ -340,7 +271,7 @@
         }
 
         .sale-banner {
-            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-green));
+            background: linear-gradient(45deg, var(--ny-dark), var(--ny-gold));
             color: white;
             padding: 8px 20px;
             border-radius: 25px;
@@ -360,9 +291,7 @@
             list-style: none;
         }
 
-        .nav-links li {
-            margin: 0 15px;
-        }
+        .nav-links li { margin: 0 15px; }
 
         .nav-links a {
             text-decoration: none;
@@ -374,9 +303,7 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--christmas-red);
-        }
+        .nav-links a:hover { color: var(--ny-gold); }
 
         .search-bar {
             display: flex;
@@ -423,9 +350,7 @@
             transition: opacity 1s ease-in-out;
         }
 
-        .slide.active {
-            opacity: 1;
-        }
+        .slide.active { opacity: 1; }
 
         .slide-content {
             position: absolute;
@@ -434,19 +359,21 @@
             transform: translateY(-50%);
             max-width: 500px;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
         .slide-content h1 {
             font-size: 48px;
             margin-bottom: 20px;
-            font-weight: 300;
+            font-weight: 700;
             line-height: 1.2;
+            color: var(--ny-gold);
         }
 
         .slide-content p {
             font-size: 18px;
             margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .slider-dots {
@@ -467,15 +394,13 @@
             transition: background 0.3s;
         }
 
-        .dot.active {
-            background: white;
-        }
+        .dot.active { background: var(--ny-gold); }
 
         .btn {
             display: inline-block;
             padding: 14px 32px;
-            background-color: var(--christmas-red);
-            color: white;
+            background-color: var(--ny-gold);
+            color: black;
             text-decoration: none;
             font-weight: 600;
             letter-spacing: 1px;
@@ -487,7 +412,7 @@
         }
 
         .btn:hover {
-            background-color: var(--christmas-green);
+            background-color: var(--ny-red);
             color: white;
         }
 
@@ -522,7 +447,7 @@
             transform: translateX(-50%);
             width: 60px;
             height: 2px;
-            background-color: var(--christmas-red);
+            background-color: var(--ny-gold);
         }
 
         /* Products Section */
@@ -562,9 +487,7 @@
             transition: transform 0.5s;
         }
 
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
+        .product-card:hover .product-image img { transform: scale(1.05); }
 
         .product-badges {
             position: absolute;
@@ -585,12 +508,12 @@
         }
 
         .badge-new {
-            background-color: var(--christmas-green);
-            color: white;
+            background-color: var(--ny-gold);
+            color: black;
         }
 
         .badge-sale {
-            background-color: var(--christmas-red);
+            background-color: var(--ny-red);
             color: white;
         }
 
@@ -605,9 +528,7 @@
             transition: opacity 0.3s;
         }
 
-        .product-card:hover .product-actions {
-            opacity: 1;
-        }
+        .product-card:hover .product-actions { opacity: 1; }
 
         .action-btn {
             width: 40px;
@@ -623,8 +544,8 @@
         }
 
         .action-btn:hover {
-            background: var(--christmas-red);
-            color: white;
+            background: var(--ny-gold);
+            color: black;
         }
 
         .product-info {
@@ -662,9 +583,7 @@
             padding: 20px;
         }
 
-        .product-modal.active {
-            display: flex;
-        }
+        .product-modal.active { display: flex; }
 
         .modal-content {
             background: white;
@@ -726,8 +645,8 @@
 
         .modal-category {
             display: inline-block;
-            background: var(--christmas-red);
-            color: white;
+            background: var(--ny-gold);
+            color: black;
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 14px;
@@ -751,9 +670,7 @@
             border-radius: 10px;
         }
 
-        .featured-content {
-            padding: 0 40px;
-        }
+        .featured-content { padding: 0 40px; }
 
         .featured-content h2 {
             font-size: 36px;
@@ -787,30 +704,19 @@
             line-height: 1.8;
         }
 
-        .testimonial-author {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .testimonial-role {
-            color: #666;
-            font-size: 14px;
-        }
+        .testimonial-author { font-weight: 600; margin-bottom: 5px; }
+        .testimonial-role { color: #666; font-size: 14px; }
 
         /* Newsletter */
         .newsletter {
-            background: linear-gradient(135deg, var(--christmas-green), var(--christmas-red));
+            background: linear-gradient(135deg, var(--ny-dark), #4a4a4a);
             color: white;
             padding: 80px 0;
             text-align: center;
             margin-bottom: 0;
         }
 
-        .newsletter h3 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            font-weight: 300;
-        }
+        .newsletter h3 { font-size: 28px; margin-bottom: 15px; font-weight: 300; }
 
         .newsletter p {
             margin-bottom: 30px;
@@ -836,8 +742,8 @@
         }
 
         .newsletter-form button {
-            background-color: var(--christmas-gold);
-            color: var(--primary-color);
+            background-color: var(--ny-gold);
+            color: black;
             border: none;
             padding: 0 30px;
             cursor: pointer;
@@ -848,13 +754,11 @@
             border-radius: 0 5px 5px 0;
         }
 
-        .newsletter-form button:hover {
-            background-color: #d4b074;
-        }
+        .newsletter-form button:hover { background-color: white; }
 
         /* Footer */
         footer {
-            background-color: #1a1a1a;
+            background-color: #000;
             color: white;
             padding: 80px 0 30px;
         }
@@ -881,7 +785,7 @@
             left: 0;
             width: 30px;
             height: 2px;
-            background-color: var(--christmas-red);
+            background-color: var(--ny-gold);
         }
 
         .footer-contact p {
@@ -902,9 +806,7 @@
             transition: color 0.3s;
         }
 
-        .social-icons a:hover {
-            color: var(--christmas-red);
-        }
+        .social-icons a:hover { color: var(--ny-gold); }
 
         .footer-bottom {
             text-align: center;
@@ -916,16 +818,17 @@
 
         /* Download Button in Footer */
         .download-app-section {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            background: linear-gradient(135deg, var(--ny-gold) 0%, #b8860b 100%);
             padding: 40px 0;
             text-align: center;
             margin-top: 40px;
             border-radius: 10px;
+            color: black;
         }
 
         .download-btn {
-            background: white;
-            color: #8B4513;
+            background: black;
+            color: white;
             border: none;
             padding: 16px 32px;
             font-size: 18px;
@@ -940,18 +843,13 @@
         }
 
         .download-btn:hover {
-            background: #f5f5f5;
+            background: #333;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .download-btn:active {
-            transform: translateY(1px);
-        }
-
-        .download-btn i {
-            font-size: 20px;
-        }
+        .download-btn:active { transform: translateY(1px); }
+        .download-btn i { font-size: 20px; }
 
         /* Mobile Menu */
         .mobile-menu-btn {
@@ -963,7 +861,6 @@
             color: var(--primary-color);
         }
 
-        /* Mobile Menu Overlay */
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -975,58 +872,24 @@
             display: none;
         }
 
-        .mobile-menu-overlay.active {
-            display: block;
-        }
+        .mobile-menu-overlay.active { display: block; }
 
         /* Responsive Styles */
         @media (max-width: 1200px) {
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (max-width: 992px) {
-            .featured-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-body {
-                grid-template-columns: 1fr;
-            }
+            .featured-section { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .modal-body { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
-            .header-top {
-                flex-wrap: wrap;
-                padding: 10px 0;
-            }
-            
-            .logo {
-                font-size: 20px;
-                order: 1;
-                flex: 1;
-            }
-            
-            .sale-banner {
-                order: 3;
-                margin-top: 10px;
-                width: 100%;
-                text-align: center;
-                font-size: 12px;
-                padding: 6px 15px;
-            }
-            
-            .search-bar {
-                order: 2;
-                width: 200px;
-                margin-left: 10px;
-            }
-            
+            .header-top { flex-wrap: wrap; padding: 10px 0; }
+            .logo { font-size: 20px; order: 1; flex: 1; }
+            .sale-banner { order: 3; margin-top: 10px; width: 100%; text-align: center; font-size: 12px; padding: 6px 15px; }
+            .search-bar { order: 2; width: 200px; margin-left: 10px; }
             .nav-links {
                 display: none;
                 position: fixed;
@@ -1042,332 +905,67 @@
                 z-index: 100;
                 transition: right 0.3s ease;
             }
-
-            .nav-links.active {
-                display: flex;
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 15px 0;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 15px;
-            }
-            
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                font-size: 16px;
-                display: block;
-                padding: 10px 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-                order: 1;
-                margin-right: 10px;
-            }
-            
-            .close-menu {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: var(--primary-color);
-            }
-
-            .slide-content {
-                left: 5%;
-                right: 5%;
-                max-width: 90%;
-            }
-
-            .slide-content h1 {
-                font-size: 32px;
-            }
-            
-            .slide-content p {
-                font-size: 16px;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-            
-            .product-image {
-                height: 200px;
-            }
-            
-            .product-info {
-                padding: 15px;
-            }
-            
-            .product-title {
-                font-size: 14px;
-            }
-            
-            .product-description {
-                font-size: 12px;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 12px;
-            }
-            
-            .btn-whatsapp {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
-
-            .featured-section {
-                gap: 30px;
-                margin-bottom: 60px;
-            }
-            
-            .featured-image {
-                height: 300px;
-            }
-            
-            .featured-content {
-                padding: 0 20px;
-            }
-            
-            .featured-content h2 {
-                font-size: 28px;
-            }
-            
-            .featured-content p {
-                font-size: 14px;
-            }
-            
-            .section-title {
-                font-size: 26px;
-                margin-bottom: 40px;
-            }
-            
-            .testimonials {
-                padding: 60px 0;
-                margin-bottom: 60px;
-            }
-            
-            .testimonial-content {
-                font-size: 16px;
-            }
-            
-            .newsletter {
-                padding: 60px 0;
-            }
-            
-            .newsletter h3 {
-                font-size: 24px;
-            }
-            
-            .newsletter p {
-                font-size: 14px;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input {
-                margin-bottom: 10px;
-                border-radius: 5px;
-                padding: 12px 15px;
-            }
-            
-            .newsletter-form button {
-                border-radius: 5px;
-                padding: 12px 15px;
-            }
-            
-            footer {
-                padding: 60px 0 20px;
-            }
-            
-            .footer-content {
-                gap: 30px;
-                margin-bottom: 40px;
-            }
-            
-            .footer-column h4 {
-                font-size: 16px;
-                margin-bottom: 20px;
-            }
-            
-            .hero-slider {
-                height: 60vh;
-                margin-bottom: 60px;
-            }
-            
-            .modal-body {
-                padding: 20px;
-                gap: 20px;
-            }
-            
-            .modal-image {
-                height: 250px;
-            }
-            
-            .modal-header {
-                padding: 15px;
-            }
-            
-            .modal-header h2 {
-                font-size: 20px;
-            }
-            
-            .modal-details h3 {
-                font-size: 18px;
-            }
-            
-            .snow-girl {
-                width: 80px;
-                height: 120px;
-                bottom: 10px;
-                right: 10px;
-            }
+            .nav-links.active { display: flex; right: 0; }
+            .nav-links li { margin: 15px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links a { font-size: 16px; display: block; padding: 10px 0; }
+            .mobile-menu-btn { display: block; order: 1; margin-right: 10px; }
+            .close-menu { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--primary-color); }
+            .slide-content { left: 5%; right: 5%; max-width: 90%; }
+            .slide-content h1 { font-size: 32px; }
+            .slide-content p { font-size: 16px; }
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .product-image { height: 200px; }
+            .product-info { padding: 15px; }
+            .product-title { font-size: 14px; }
+            .product-description { font-size: 12px; }
+            .btn { padding: 12px 20px; font-size: 12px; }
+            .btn-whatsapp { padding: 10px 15px; font-size: 12px; }
+            .featured-section { gap: 30px; margin-bottom: 60px; }
+            .featured-image { height: 300px; }
+            .featured-content { padding: 0 20px; }
+            .featured-content h2 { font-size: 28px; }
+            .featured-content p { font-size: 14px; }
+            .section-title { font-size: 26px; margin-bottom: 40px; }
+            .testimonials { padding: 60px 0; margin-bottom: 60px; }
+            .testimonial-content { font-size: 16px; }
+            .newsletter { padding: 60px 0; }
+            .newsletter h3 { font-size: 24px; }
+            .newsletter p { font-size: 14px; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-form input { margin-bottom: 10px; border-radius: 5px; padding: 12px 15px; }
+            .newsletter-form button { border-radius: 5px; padding: 12px 15px; }
+            footer { padding: 60px 0 20px; }
+            .footer-content { gap: 30px; margin-bottom: 40px; }
+            .footer-column h4 { font-size: 16px; margin-bottom: 20px; }
+            .hero-slider { height: 60vh; margin-bottom: 60px; }
+            .modal-body { padding: 20px; gap: 20px; }
+            .modal-image { height: 250px; }
+            .modal-header { padding: 15px; }
+            .modal-header h2 { font-size: 20px; }
+            .modal-details h3 { font-size: 18px; }
         }
 
         @media (max-width: 576px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .product-image {
-                height: 250px;
-            }
-            
-            .search-bar {
-                width: 100%;
-                margin: 10px 0 0;
-                order: 3;
-            }
-            
-            .hero-slider {
-                height: 50vh;
-            }
-            
-            .slide-content h1 {
-                font-size: 24px;
-            }
-            
-            .slide-content p {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-            
-            .slider-dots {
-                bottom: 15px;
-            }
-            
-            .featured-image {
-                height: 200px;
-            }
-            
-            .featured-content h2 {
-                font-size: 22px;
-            }
-            
-            .section-title {
-                font-size: 22px;
-            }
-            
-            .testimonial-content {
-                font-size: 14px;
-            }
-            
-            .snow-girl {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .header-top {
-                padding: 8px 0;
-            }
-            
-            .logo {
-                font-size: 18px;
-            }
-            
-            .mobile-menu-btn {
-                font-size: 20px;
-            }
-            
-            .search-bar {
-                padding: 6px 12px;
-            }
-            
-            .search-bar input {
-                font-size: 12px;
-            }
-            
-            .sale-banner {
-                font-size: 11px;
-                padding: 5px 12px;
-            }
-            
-            .product-info {
-                padding: 12px;
-            }
-            
-            .btn {
-                padding: 10px 16px;
-                font-size: 11px;
-            }
-            
-            .btn-whatsapp {
-                padding: 8px 12px;
-                font-size: 11px;
-            }
+            .products-grid { grid-template-columns: 1fr; gap: 15px; }
+            .product-image { height: 250px; }
+            .search-bar { width: 100%; margin: 10px 0 0; order: 3; }
+            .hero-slider { height: 50vh; }
+            .slide-content h1 { font-size: 24px; }
+            .slide-content p { font-size: 14px; margin-bottom: 20px; }
+            .slider-dots { bottom: 15px; }
+            .featured-image { height: 200px; }
+            .featured-content h2 { font-size: 22px; }
+            .section-title { font-size: 22px; }
+            .testimonial-content { font-size: 14px; }
         }
 
-        /* Skeleton Loading Styles */
-        .skeleton {
-            animation: skeleton-loading 1s linear infinite alternate;
-        }
-        
-        .skeleton-image {
-            height: 300px;
-            background-color: #e0e0e0;
-            border-radius: 8px;
-        }
-        
-        .skeleton-text {
-            height: 16px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        
-        .skeleton-btn {
-            height: 44px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            margin-top: 15px;
-        }
-        
-        @keyframes skeleton-loading {
-            0% {
-                background-color: #e0e0e0;
-            }
-            100% {
-                background-color: #f5f5f5;
-            }
-        }
+        /* Skeleton Loading */
+        .skeleton { animation: skeleton-loading 1s linear infinite alternate; }
+        .skeleton-image { height: 300px; background-color: #e0e0e0; border-radius: 8px; }
+        .skeleton-text { height: 16px; background-color: #e0e0e0; border-radius: 4px; margin-bottom: 10px; }
+        .skeleton-btn { height: 44px; background-color: #e0e0e0; border-radius: 4px; margin-top: 15px; }
+        @keyframes skeleton-loading { 0% { background-color: #e0e0e0; } 100% { background-color: #f5f5f5; } }
     </style>
 </head>
 <body>
@@ -1377,8 +975,8 @@
             <div class="scanning-icon">
                 <i class="fas fa-search"></i>
             </div>
-            <div class="scanning-text">Wait a sec until we finish your scanning</div>
-            <div class="scanning-subtext">Loading the best furniture deals for you...</div>
+            <div class="scanning-text">Updating to 2026 Collection...</div>
+            <div class="scanning-subtext">Loading the best New Year deals for you...</div>
             <div class="scanning-progress">
                 <div class="scanning-progress-bar" id="scanning-progress"></div>
             </div>
@@ -1392,9 +990,6 @@
 
     <!-- Snow Effect -->
     <div class="snow-container" id="snow-container"></div>
-    <div class="snow-girl">
-        <img src="https://lh3.googleusercontent.com/sitesv/AAzXCkfn9tLUczriec_G0nbEEkHYRYSYCoWqz7xy6O16x573RDJBSAPzxaUd9OGjigtqRVNqW0b8EeJyz71zr0fbkpRr-F-cRNlanrqqpEWt3ESleBgMO8jIlyzE4eR2MUisK4l2gfM7CiWs1HUoMzUepU3HSwu0H7HHXPMXs_aOasqcZbJX1tWsVvrIdoc=w1280" alt="Snow Girl">
-    </div>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
@@ -1415,7 +1010,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="logo">Furniture Articles</div>
-                <div class="sale-banner">Christmas Sale!</div>
+                <div class="sale-banner">Happy New Year 2026!</div>
                 <ul class="nav-links" id="nav-links">
                     <button class="close-menu" id="close-menu">
                         <i class="fas fa-times"></i>
@@ -1437,24 +1032,24 @@
 
     <!-- Hero Slider -->
     <section class="hero-slider">
-        <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://www.shutterstock.com/image-illustration/merry-christmas-sale-promotion-poster-600nw-2226174399.jpg');">
+        <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1700&q=80');">
             <div class="slide-content">
-                <h1>Christmas Furniture Sale</h1>
-                <p>Transform your home for the holidays with our exclusive Christmas collection</p>
-                <a href="#featured-posts" class="btn">Shop Now</a>
+                <h1>New Year Sale 2026</h1>
+                <p>Start your year with style. Exclusive furniture collection for the modern home.</p>
+                <a href="#featured-posts" class="btn">Shop New Arrivals</a>
             </div>
         </div>
-        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://www.homelivingfurniture.com/images/category/room_category/livingroommain.webp');">
+        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1700&q=80');">
             <div class="slide-content">
-                <h1>Winter Special Offers</h1>
+                <h1>2026 Special Offers</h1>
                 <p>Don't miss our biggest sale of the year with discounts up to 50%</p>
                 <a href="#featured-posts" class="btn">View Offers</a>
             </div>
         </div>
-        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80');">
+        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1700&q=80');">
             <div class="slide-content">
-                <h1>Festive Home Decor</h1>
-                <p>Create the perfect holiday atmosphere with our seasonal furniture</p>
+                <h1>Luxury Comfort</h1>
+                <p>Create the perfect atmosphere with our premium furniture selection.</p>
                 <a href="#featured-posts" class="btn">Explore Collection</a>
             </div>
         </div>
@@ -1467,7 +1062,7 @@
 
     <!-- Featured Posts -->
     <section class="container" id="featured-posts">
-        <h2 class="section-title">Festive Furniture Collection</h2>
+        <h2 class="section-title">2026 Furniture Collection</h2>
         <div class="products-grid" id="posts-container">
             <!-- Loading skeleton -->
             <div class="product-card skeleton">
@@ -1478,42 +1073,19 @@
                     <div class="btn skeleton-btn"></div>
                 </div>
             </div>
-            <div class="product-card skeleton">
-                <div class="product-image skeleton-image"></div>
-                <div class="product-info">
-                    <div class="product-title skeleton-text"></div>
-                    <div class="product-description skeleton-text"></div>
-                    <div class="btn skeleton-btn"></div>
-                </div>
-            </div>
-            <div class="product-card skeleton">
-                <div class="product-image skeleton-image"></div>
-                <div class="product-info">
-                    <div class="product-title skeleton-text"></div>
-                    <div class="product-description skeleton-text"></div>
-                    <div class="btn skeleton-btn"></div>
-                </div>
-            </div>
-            <div class="product-card skeleton">
-                <div class="product-image skeleton-image"></div>
-                <div class="product-info">
-                    <div class="product-title skeleton-text"></div>
-                    <div class="product-description skeleton-text"></div>
-                    <div class="btn skeleton-btn"></div>
-                </div>
-            </div>
+            <!-- More skeletons... -->
         </div>
     </section>
 
     <!-- Featured Section -->
     <section class="container">
         <div class="featured-section">
-            <div class="featured-image" style="background-image: url('https://d2kz53n3bzvihv.cloudfront.net/resized/790_395_0_255_255_255/media/gbu0/categoryxxl/image/DesktopHeader-P386_NWT008_NWT005_NWT009_B.jpg.jpeg')"></div>
+            <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1700&q=80')"></div>
             <div class="featured-content">
-                <h2>Christmas Special Collection</h2>
-                <p>Our exclusive Christmas furniture collection brings warmth and joy to your home. Each piece is designed to create a festive atmosphere while maintaining comfort and style.</p>
-                <p>From elegant dining sets for family gatherings to cozy living room furniture for those quiet winter evenings, we have everything you need to make this holiday season special.</p>
-                <a href="#featured-posts" class="btn">View Christmas Collection</a>
+                <h2>New Year Special Collection</h2>
+                <p>Our exclusive 2026 furniture collection brings warmth and luxury to your home. Each piece is designed to create a fresh atmosphere for the new year while maintaining comfort and style.</p>
+                <p>From elegant dining sets for family gatherings to cozy living room furniture, refresh your home this season.</p>
+                <a href="#featured-posts" class="btn">View Collection</a>
             </div>
         </div>
     </section>
@@ -1523,10 +1095,10 @@
         <div class="container">
             <div class="testimonial-slider">
                 <div class="testimonial-content">
-                    "The Christmas dining set I purchased completely transformed our holiday dinners! The quality is exceptional and it arrived just in time for our family gathering. Highly recommended!"
+                    "The New Year dining set I purchased completely transformed our home! The quality is exceptional. Highly recommended!"
                 </div>
                 <div class="testimonial-author">Emily Johnson</div>
-                <div class="testimonial-role">Happy Customer</div>
+                <div class="testimonial-role">Verified Customer</div>
             </div>
         </div>
     </section>
@@ -1549,8 +1121,8 @@
     <!-- Newsletter & Footer -->
     <section class="newsletter">
         <div class="container">
-            <h3>Join Our Holiday Newsletter</h3>
-            <p>Subscribe to receive exclusive Christmas deals, holiday tips, and special offers.</p>
+            <h3>Join Our 2026 Newsletter</h3>
+            <p>Subscribe to receive exclusive New Year deals, design tips, and special offers.</p>
             <form class="newsletter-form">
                 <input type="email" placeholder="Your email address" required>
                 <button type="submit" class="btn">Subscribe</button>
@@ -1561,14 +1133,13 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- Download App Section in Footer -->
             <div class="download-app-section">
-                <h3 style="color: white; margin-bottom: 20px;">Download Our Mobile App</h3>
-                <p style="color: white; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Get the best furniture deals, exclusive collections, and design tips right on your phone. Download our app now!
+                <h3 style="color: black; margin-bottom: 20px;">Download Our Mobile App</h3>
+                <p style="color: black; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Get the best furniture deals right on your phone. Download our app now!
                 </p>
                 <button class="download-btn" id="downloadBtn">
-                    <i class="fas fa-download"></i> Download Furniture Articles App
+                    <i class="fas fa-download"></i> Download App
                 </button>
             </div>
             
@@ -1591,7 +1162,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Furniture Articles. All rights reserved. | Christmas Special Edition</p>
+                <p>&copy; 2026 Furniture Articles. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -1609,61 +1180,43 @@
             measurementId: "G-32KJCP2Y36"
         };
 
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Performance optimizations
         let postsCache = null;
         let lastFetchTime = 0;
-        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+        const CACHE_DURATION = 5 * 60 * 1000;
 
-        // Scanning popup functions
         function showScanningPopup() {
             const scanningPopup = document.getElementById('scanning-popup');
             const progressBar = document.getElementById('scanning-progress');
-            
             scanningPopup.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Animate progress bar
             let progress = 0;
             const progressInterval = setInterval(() => {
                 progress += Math.random() * 10;
-                if (progress > 90) {
-                    progress = 90;
-                }
+                if (progress > 90) progress = 90;
                 progressBar.style.width = progress + '%';
             }, 200);
-            
             return progressInterval;
         }
 
         function hideScanningPopup(progressInterval) {
             const scanningPopup = document.getElementById('scanning-popup');
             const progressBar = document.getElementById('scanning-progress');
-            
             clearInterval(progressInterval);
-            
-            // Complete the progress bar
             progressBar.style.width = '100%';
-            
             setTimeout(() => {
                 scanningPopup.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                
-                // Reset progress bar
-                setTimeout(() => {
-                    progressBar.style.width = '0%';
-                }, 300);
+                setTimeout(() => { progressBar.style.width = '0%'; }, 300);
             }, 500);
         }
 
-        // Snow Effect
         function createSnowfall() {
             const snowContainer = document.getElementById('snow-container');
-            const snowflakes = ['❄', '❅', '❆'];
-            const colors = ['#ff3366', '#33ccff', '#ffcc00', '#ff66cc', '#66ff33'];
+            const snowflakes = ['❄', '✦', '•'];
+            const colors = ['#d4af37', '#ffffff', '#c41e3a'];
             
             function createSnowflake() {
                 const snowflake = document.createElement('div');
@@ -1672,41 +1225,18 @@
                 snowflake.style.left = Math.random() * 100 + 'vw';
                 snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
                 snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                snowflake.style.color = colors[Math.floor(Math.random() * colors.length)];
                 snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
                 snowContainer.appendChild(snowflake);
-                
-                setTimeout(() => {
-                    snowflake.remove();
-                }, 5000);
+                setTimeout(() => { snowflake.remove(); }, 5000);
             }
-            
-            function createSaleText() {
-                const saleText = document.createElement('div');
-                saleText.className = 'sale-text';
-                saleText.textContent = 'Sale!';
-                saleText.style.left = Math.random() * 100 + 'vw';
-                saleText.style.animationDuration = Math.random() * 5 + 5 + 's';
-                saleText.style.color = colors[Math.floor(Math.random() * colors.length)];
-                saleText.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                snowContainer.appendChild(saleText);
-                
-                setTimeout(() => {
-                    saleText.remove();
-                }, 10000);
-            }
-            
-            setInterval(createSnowflake, 100);
-            setInterval(createSaleText, 2000);
+            setInterval(createSnowflake, 150);
         }
 
-        // Load posts from Firebase
         function loadPosts() {
             const postsContainer = document.getElementById('posts-container');
-            
-            // Show scanning popup
             const progressInterval = showScanningPopup();
             
-            // Check if we have cached data
             const now = Date.now();
             if (postsCache && (now - lastFetchTime) < CACHE_DURATION) {
                 setTimeout(() => {
@@ -1716,55 +1246,12 @@
                 return;
             }
             
-            // Show loading state
-            postsContainer.innerHTML = `
-                <div class="product-card skeleton">
-                    <div class="product-image skeleton-image"></div>
-                    <div class="product-info">
-                        <div class="product-title skeleton-text"></div>
-                        <div class="product-description skeleton-text"></div>
-                        <div class="btn skeleton-btn"></div>
-                    </div>
-                </div>
-                <div class="product-card skeleton">
-                    <div class="product-image skeleton-image"></div>
-                    <div class="product-info">
-                        <div class="product-title skeleton-text"></div>
-                        <div class="product-description skeleton-text"></div>
-                        <div class="btn skeleton-btn"></div>
-                    </div>
-                </div>
-                <div class="product-card skeleton">
-                    <div class="product-image skeleton-image"></div>
-                    <div class="product-info">
-                        <div class="product-title skeleton-text"></div>
-                        <div class="product-description skeleton-text"></div>
-                        <div class="btn skeleton-btn"></div>
-                    </div>
-                </div>
-                <div class="product-card skeleton">
-                    <div class="product-image skeleton-image"></div>
-                    <div class="product-info">
-                        <div class="product-title skeleton-text"></div>
-                        <div class="product-description skeleton-text"></div>
-                        <div class="btn skeleton-btn"></div>
-                    </div>
-                </div>
-            `;
-            
-            // Fetch data from Firebase
             database.ref('furniturePosts').once('value')
                 .then(snapshot => {
                     const posts = [];
-                    snapshot.forEach(childSnapshot => {
-                        posts.push(childSnapshot.val());
-                    });
-                    
-                    // Cache the data
+                    snapshot.forEach(childSnapshot => { posts.push(childSnapshot.val()); });
                     postsCache = posts;
                     lastFetchTime = Date.now();
-                    
-                    // Add a small delay for better UX
                     setTimeout(() => {
                         renderPosts(posts);
                         hideScanningPopup(progressInterval);
@@ -1773,38 +1260,12 @@
                 .catch(error => {
                     console.error('Error loading posts:', error);
                     hideScanningPopup(progressInterval);
-                    showLoadingError();
                 });
         }
 
-        // Show loading error
-        function showLoadingError() {
-            const postsContainer = document.getElementById('posts-container');
-            postsContainer.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                    <h3 style="color: #666; margin-bottom: 10px;">Unable to Load Products</h3>
-                    <p style="color: #999;">Please check your connection and try again.</p>
-                    <button class="btn" onclick="loadPosts()" style="margin-top: 20px;">Try Again</button>
-                </div>
-            `;
-        }
-
-        // Render posts to the DOM
         function renderPosts(posts) {
             const postsContainer = document.getElementById('posts-container');
-            
-            if (posts.length === 0) {
-                postsContainer.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                        <i class="fas fa-box-open" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                        <h3 style="color: #666; margin-bottom: 10px;">No Furniture Available</h3>
-                        <p style="color: #999;">Check back later for new furniture collections.</p>
-                    </div>
-                `;
-                return;
-            }
-            
+            if (posts.length === 0) return;
             postsContainer.innerHTML = '';
             
             posts.forEach(post => {
@@ -1814,16 +1275,12 @@
                     <div class="product-image">
                         <img src="${post.image}" alt="${post.title}" loading="lazy">
                         <div class="product-badges">
-                            <div class="product-badge badge-sale">11.11 SALE</div>
-                            <div class="product-badge badge-new">CHRISTMAS</div>
+                            <div class="product-badge badge-sale">SALE</div>
+                            <div class="product-badge badge-new">2026</div>
                         </div>
                         <div class="product-actions">
-                            <div class="action-btn" onclick="addToWishlist('${post.id}')">
-                                <i class="far fa-heart"></i>
-                            </div>
-                            <div class="action-btn" onclick="showProductDetails('${post.id}')">
-                                <i class="far fa-eye"></i>
-                            </div>
+                            <div class="action-btn" onclick="addToWishlist('${post.id}')"><i class="far fa-heart"></i></div>
+                            <div class="action-btn" onclick="showProductDetails('${post.id}')"><i class="far fa-eye"></i></div>
                         </div>
                     </div>
                     <div class="product-info">
@@ -1838,11 +1295,9 @@
             });
         }
 
-        // Show product details modal
         function showProductDetails(postId) {
             database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
                 const post = snapshot.val();
-                
                 if (post) {
                     document.getElementById('modal-title').textContent = post.title;
                     document.getElementById('modal-body').innerHTML = `
@@ -1851,38 +1306,25 @@
                             <span class="modal-category">${post.category}</span>
                             <h3>${post.title}</h3>
                             <p>${post.description}</p>
-                            <p><strong>Added:</strong> ${new Date(post.createdAt).toLocaleDateString()}</p>
                             <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')" style="margin-top: 20px;">
                                 <i class="fab fa-whatsapp"></i> Contact via WhatsApp
                             </button>
                         </div>
                     `;
-                    
                     document.getElementById('product-modal').classList.add('active');
                     document.body.style.overflow = 'hidden';
                 }
             });
         }
 
-        // Close modal
         document.getElementById('close-modal').addEventListener('click', function() {
             document.getElementById('product-modal').classList.remove('active');
             document.body.style.overflow = 'auto';
         });
 
-        // Close modal when clicking outside
-        document.getElementById('product-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // WhatsApp function
         function openWhatsApp(postId) {
             database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
                 const post = snapshot.val();
-                
                 if (post) {
                     const message = encodeURIComponent(post.whatsappMessage + ' - ' + post.title);
                     window.open(`https://wa.me/447405338093?text=${message}`, '_blank');
@@ -1890,189 +1332,45 @@
             });
         }
 
-        // Add to wishlist function
-        function addToWishlist(postId) {
-            database.ref('furniturePosts/' + postId).once('value').then(snapshot => {
-                const post = snapshot.val();
-                
-                if (post) {
-                    alert(`Added "${post.title}" to your wishlist!`);
-                }
-            });
-        }
-
-        // Search functionality
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const postsContainer = document.getElementById('posts-container');
-            
-            if (searchTerm.trim() === '') {
-                loadPosts();
-                return;
-            }
-            
-            // Show scanning popup for search
-            const progressInterval = showScanningPopup();
-            
-            database.ref('furniturePosts').once('value').then(snapshot => {
-                const posts = [];
-                snapshot.forEach(childSnapshot => {
-                    posts.push(childSnapshot.val());
-                });
-                
-                const filteredPosts = posts.filter(post => 
-                    post.title.toLowerCase().includes(searchTerm) || 
-                    post.description.toLowerCase().includes(searchTerm) ||
-                    post.category.toLowerCase().includes(searchTerm)
-                );
-                
-                postsContainer.innerHTML = '';
-                
-                if (filteredPosts.length === 0) {
-                    postsContainer.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                            <i class="fas fa-search" style="font-size: 48px; color: #e8c284; margin-bottom: 20px;"></i>
-                            <h3 style="color: #666; margin-bottom: 10px;">No Results Found</h3>
-                            <p style="color: #999;">No furniture matching "${searchTerm}" was found.</p>
-                        </div>
-                    `;
-                } else {
-                    filteredPosts.forEach(post => {
-                        const postElement = document.createElement('div');
-                        postElement.className = 'product-card';
-                        postElement.innerHTML = `
-                            <div class="product-image">
-                                <img src="${post.image}" alt="${post.title}">
-                                <div class="product-badges">
-                                    <div class="product-badge badge-sale">11.11 SALE</div>
-                                    <div class="product-badge badge-new">CHRISTMAS</div>
-                                </div>
-                                <div class="product-actions">
-                                    <div class="action-btn" onclick="addToWishlist('${post.id}')">
-                                        <i class="far fa-heart"></i>
-                                    </div>
-                                    <div class="action-btn" onclick="showProductDetails('${post.id}')">
-                                        <i class="far fa-eye"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3 class="product-title">${post.title}</h3>
-                                <p class="product-description">${post.description.substring(0, 100)}...</p>
-                                <button class="btn btn-whatsapp" onclick="openWhatsApp('${post.id}')">
-                                    <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                                </button>
-                            </div>
-                        `;
-                        postsContainer.appendChild(postElement);
-                    });
-                }
-                
-                // Hide scanning popup
-                setTimeout(() => {
-                    hideScanningPopup(progressInterval);
-                }, 1000);
-            });
-        });
-
-        // Enter key search
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('search-btn').click();
-            }
-        });
+        function addToWishlist(postId) { alert(`Added to wishlist!`); }
 
         // Slider functionality
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
-
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
-            
             currentSlide = n;
             if (currentSlide >= slides.length) currentSlide = 0;
             if (currentSlide < 0) currentSlide = slides.length - 1;
-            
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
         }
+        setInterval(() => { showSlide(currentSlide + 1); }, 5000);
 
-        // Auto slide
-        setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
-
-        // Dot click events
-        dots.forEach(dot => {
-            dot.addEventListener('click', function() {
-                const slideIndex = parseInt(this.getAttribute('data-slide'));
-                showSlide(slideIndex);
-            });
-        });
-
-        // Mobile menu functionality
+        // Mobile menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const navLinks = document.getElementById('nav-links');
         const closeMenuBtn = document.getElementById('close-menu');
         const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-        function openMobileMenu() {
-            navLinks.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
         }
+        mobileMenuBtn.onclick = toggleMenu;
+        closeMenuBtn.onclick = toggleMenu;
+        mobileMenuOverlay.onclick = toggleMenu;
 
-        function closeMobileMenu() {
-            navLinks.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        mobileMenuBtn.addEventListener('click', openMobileMenu);
-        closeMenuBtn.addEventListener('click', closeMobileMenu);
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-        // Close mobile menu when clicking on a link
-        const navLinksItems = navLinks.querySelectorAll('a');
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-
-        // WhatsApp button configuration
-        const config = {
-            phoneNumber: "447405338093",
-            defaultMessage: "Hi, I'm interested in your products. Can you help me?",
-            businessName: "Furniture Articles"
-        };
-
-        // Create WhatsApp URL
-        function createWhatsAppURL(message = config.defaultMessage) {
-            return `https://wa.me/${config.phoneNumber}?text=${encodeURIComponent(message)}`;
-        }
-
-        // Initialize WhatsApp button
-        const whatsappBtn = document.querySelector('.whatsapp-float');
-        whatsappBtn.href = createWhatsAppURL();
-
-        // Download button functionality
         document.getElementById('downloadBtn').addEventListener('click', function() {
             window.location.href = 'https://www.appcreator24.com/app3824539-607mta';
         });
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createSnowfall();
             loadPosts();
         });
     </script>
-
-    <!-- Chatbot Integration -->
-    <script
-        chatbot_id="6917f0c767f6ec9626ee8752"
-        data-type="default"
-        src="https://app.thinkstack.ai/bot/thinkstackai-loader.min.js"
-    ></script>
 </body>
 </html>
